@@ -44,3 +44,31 @@ Credits
 
 Owner note
 - The site footer includes a "Meet the couple" panel where you can add a photo and short description of the shop owners. Edit translations in `_data/i18n/*.json` using the keys `footer.meet.title`, `footer.meet.desc`, and `footer.meet.image` to localize and change the image path.
+
+Notes for GitHub Pages and local development
+------------------------------------------
+- This project is configured to publish to a GitHub Project Pages URL like `https://<user>.github.io/hot-cups/`.
+- Eleventy uses `pathPrefix` to generate correct URLs for assets and language pages when deployed under a repository path. The site will use `/hot-cups/` as the base path in production builds and `/` for local development.
+
+How to run locally (dev)
+- Install dependencies: `npm install`
+- Start Eleventy with live reload (local builds use `/` path prefix):
+	```powershell
+	npm run dev
+	```
+
+How to run a production build (simulate CI / GitHub Pages)
+- To reproduce the same output the Pages workflow produces (pathPrefix set to `/hot-cups/`), run:
+	```powershell
+	$Env:ELEVENTY_ENV='production'; npm run build
+	```
+- After this build, open files under `docs/` and confirm asset URLs include `/hot-cups/assets/...`.
+
+Troubleshooting deployed assets
+- If assets 404 after deployment, check your Actions run and confirm the Eleventy build logged `Using pathPrefix: /hot-cups/` and that the `Upload artifact` step uploaded the `docs/` folder containing `assets/`.
+- You can fetch the deployed HTML and inspect URLs:
+	```powershell
+	curl https://<user>.github.io/hot-cups/ -UseBasicParsing | Select-String -Pattern 'assets/' -Context 0,1
+	```
+
+If you want me to, I can add a short section in this README with a Pages status badge and a link to the last successful Actions run.

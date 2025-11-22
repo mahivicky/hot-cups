@@ -57,9 +57,9 @@
   <div class="max-w-4xl mx-auto p-4">
     <div class="flex justify-end mb-4">
       <label for="lang" class="sr-only">Language</label>
-      <select id="lang" class="border rounded p-2" onchange="if(this.value) location.href=this.value">
+      <select id="lang" class="border rounded p-2" onchange="navigateLang(this.value)">
         {% for l in languages %}
-          <option value="{{ pathPrefix | default('/') }}{{ l.code }}/" {% if l.code == page.lang %}selected{% endif %}>{{ l.label }}</option>
+          <option value="{{ l.code }}" {% if l.code == page.lang %}selected{% endif %}>{{ l.label }}</option>
         {% endfor %}
       </select>
     </div>
@@ -91,6 +91,38 @@
     });
 
     if (window.AOS) AOS.init({ duration: 600, once: true });
+  </script>
+  <script>
+    // Compute project base for language navigation.
+    // `pathPrefix` is injected by Eleventy in production; fallback to deriving from pathname.
+    (function(){
+      var injected = '{{ pathPrefix | default('/') }}';
+      // normalize trailing slash
+      if (injected && injected !== '/') {
+        if (!injected.endsWith('/')) injected = injected + '/';
+      }
+      var projectBase = injected === '/' ? null : injected;
+      if (!projectBase) {
+        // Only derive a repo base from the pathname when hosted on github.io
+        // (e.g., https://user.github.io/hot-cups/en/ -> /hot-cups/).
+        // For local dev (localhost) we want the base to be '/'.
+        if (location.hostname && location.hostname.indexOf('github.io') !== -1) {
+          var parts = location.pathname.split('/');
+          if (parts.length > 1 && parts[1]) projectBase = '/' + parts[1] + '/';
+          else projectBase = '/';
+        } else {
+          projectBase = '/';
+        }
+      }
+      window.__PROJECT_BASE = projectBase;
+      window.navigateLang = function(code){
+        if (!code) return;
+        var dest = window.__PROJECT_BASE + code + '/';
+        // ensure we don't accidentally navigate to '//' on root
+        if (dest.indexOf('//') === 0) dest = dest.replace('//','/');
+        location.href = dest;
+      };
+    })();
   </script>
 </body>
 </html>

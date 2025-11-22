@@ -19,7 +19,7 @@ const i18n = (function () {
       "juice.mango.desc": "Fresh, ripe mango juice",
       "juice.amla.name": "Amla Juice – Top 10 Powerful Benefits",
       "juice.amla.desc": "1. Super immunity booster – protects from infections.\n2.Enhances digestion and reduces acidity.\n3. Natural detox drink that purifies the blood.\n4. Gives glowing, youthful skin.\n5. Strengthens hair roots and reduces hair fall.\n6. Supports weight loss by boosting metabolism.\n7. Helps control blood sugar levels.\n8. Improves heart health and lowers bad cholesterol.\n9. Sharpens memory and improves focus.\n10. Boosts energy and reduces tiredness.",
-      "juice.amla.image": "/assets/images/amla_juice.png"
+      "juice.amla.image": "assets/images/amla_juice.png"
     },
     ta: {
       "promo.title": "வெப்பமான சூப் பண்டிகை!",
