@@ -1,0 +1,67 @@
+---
+pagination:
+  data: languages
+  size: 1
+  alias: lang
+eleventyComputed:
+  page:
+    lang: "{{ lang.code }}"
+layout: layouts/base.njk
+permalink: "/{{ lang.code }}/index.html"
+---
+
+<section>
+  {# <h2 class="text-2xl font-semibold">{{ i18n[page.lang]["soups.title"] }}</h2> #}
+  <div id="section-soups-{{ page.lang }}" class="mt-4 space-y-4" data-section="soups" role="tabpanel" aria-labelledby="tab-soups-{{ page.lang }}">
+    {% for item in menu.soups %}
+    <article class="p-4 bg-white rounded shadow">
+      <div class="flex flex-col md:flex-row items-start gap-4">
+        <img src="/{{ item.image }}" alt="{{ i18n[page.lang][ item.id + '.name' ] }}" class="w-full md:w-[200px] h-auto md:h-[200px] object-cover rounded" />
+        <div class="flex-1">
+          <h3 class="font-bold text-lg">{{ i18n[page.lang][ item.id + '.name' ] }}</h3>
+          {% set benefits = i18n[page.lang][ item.id + '.benefits' ] %}
+          {% if benefits %}
+            {# render with progressive reveal when there are more than 2 items #}
+            <ol id="benefits-{{ item.id }}" class="benefits list-decimal pl-6 text-sm text-slate-600 space-y-1 {% if benefits | length > 1 %}collapsed{% endif %}" aria-hidden="true">
+              {% for b in benefits %}
+                <li>{{ b }}</li>
+              {% endfor %}
+            </ol>
+            {% if benefits | length > 1 %}
+              <div class="mt-2">
+                <button class="reveal-toggle" aria-expanded="false" aria-controls="benefits-{{ item.id }}" data-target="#benefits-{{ item.id }}">Show more</button>
+              </div>
+            {% endif %}
+          {% else %}
+            <p class="text-sm text-slate-600">{{ i18n[page.lang][ item.id + '.desc' ] }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+  <div id="section-juices-{{ page.lang }}" class="mt-6 space-y-4" data-section="juices" role="tabpanel" aria-labelledby="tab-juices-{{ page.lang }}" style="display:none">
+    {# <h2 class="text-2xl font-semibold">{{ i18n[page.lang]["juices.title"] }}</h2> #}
+    {% for item in menu.juices %}
+    <article class="p-4 bg-white rounded shadow">
+      <div class="flex flex-col md:flex-row items-start gap-4">
+        <img src="/{{ item.image }}" alt="{{ i18n[page.lang][ item.id + '.name' ] }}" class="w-full md:w-[200px] h-auto md:h-[200px] object-cover rounded" />
+        <div class="flex-1">
+          <h3 class="font-bold text-lg">{{ i18n[page.lang][ item.id + '.name' ] }}</h3>
+          {% set benefits = i18n[page.lang][ item.id + '.benefits' ] %}
+          {% if benefits %}
+            <ol class="list-decimal pl-6 text-sm text-slate-600 space-y-1">
+              {% for b in benefits %}
+                <li>{{ b }}</li>
+              {% endfor %}
+            </ol>
+          {% else %}
+            <p class="text-sm text-slate-600">{{ i18n[page.lang][ item.id + '.desc' ] }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>

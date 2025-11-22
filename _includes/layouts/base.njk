@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="{{ page.lang or 'en' }}">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ title or site.title or 'Hot Cups' }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    /* Progressive reveal for benefits lists (mobile-first)
+       Animation is driven by max-height transitions via JS for reliable size calculation. */
+    .benefits{
+      overflow: hidden;
+      transition: max-height 300ms ease;
+    }
+    .benefits.collapsed{
+      /* collapsed state will have inline max-height set by JS to show the first item */
+    }
+    .reveal-toggle{
+      background: transparent;
+      border: none;
+      color: #16a34a; /* green-600 */
+      padding: .25rem .5rem;
+      font-weight: 600;
+    }
+
+    /* Skip link for keyboard users */
+    .skip-link{
+      position: absolute;
+      left: -999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+    .skip-link:focus{
+      left: 1rem;
+      top: 1rem;
+      width: auto;
+      height: auto;
+      padding: .5rem .75rem;
+      background: white;
+      border-radius: .25rem;
+      z-index: 50;
+    }
+
+    .today-banner{
+      background: linear-gradient(90deg, rgba(16,185,129,0.12), rgba(16,185,129,0.06));
+      border: 1px solid rgba(16,185,129,0.18);
+      color: #065f46; /* green-800 */
+    }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div class="max-w-4xl mx-auto p-4">
+    <div class="flex justify-end mb-4">
+      <label for="lang" class="sr-only">Language</label>
+      <select id="lang" class="border rounded p-2" onchange="if(this.value) location.href=this.value">
+        {% for l in languages %}
+          <option value="/{{ l.code }}/" {% if l.code == page.lang %}selected{% endif %}>{{ l.label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    {% include "components/today.njk" %}
+
+    {% include "components/header.njk" %}
+    <div class="mt-4">{% include "components/nav.njk" %}</div>
+
+    <main class="mt-6" data-aos="fade-up">
+      {{ content | safe }}
+    </main>
+
+    {% include "components/footer.njk" %}
+  </div>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    // Simple tab UI: show/hide sections with data-tab
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.tab-btn');
+      if (!btn) return;
+      const tab = btn.getAttribute('data-tab');
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('bg-green-100','text-green-700'));
+      btn.classList.add('bg-green-100','text-green-700');
+      document.querySelectorAll('[data-section]').forEach(s => s.style.display = 'none');
+      const target = document.querySelector(`[data-section="${tab}"]`);
+      if (target) target.style.display = '';
+    });
+
+    if (window.AOS) AOS.init({ duration: 600, once: true });
+  </script>
+</body>
+</html>
