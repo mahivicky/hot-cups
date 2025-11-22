@@ -100,26 +100,37 @@ const i18n = (function () {
     });
   }
 
+
+  // Helper to prefix asset paths with project base if needed
+  function prefixAsset(val) {
+    if (typeof val === 'string' && val.startsWith('assets/')) {
+      var base = window.__PROJECT_BASE || '/';
+      if (!base.endsWith('/')) base += '/';
+      return base + val;
+    }
+    return val;
+  }
+
   // set src on images (or other elements with data-i18n-src)
-    document.querySelectorAll('[data-i18n-src]').forEach(el => {
-      const key = el.getAttribute('data-i18n-src');
-      const val = getText(key, lang);
-      if (val) el.src = val;
-    });
+  document.querySelectorAll('[data-i18n-src]').forEach(el => {
+    const key = el.getAttribute('data-i18n-src');
+    const val = prefixAsset(getText(key, lang));
+    if (val) el.src = val;
+  });
 
-    // set alt text
-    document.querySelectorAll('[data-i18n-alt]').forEach(el => {
-      const key = el.getAttribute('data-i18n-alt');
-      const val = getText(key, lang);
-      if (val) el.alt = val;
-    });
+  // set alt text
+  document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+    const key = el.getAttribute('data-i18n-alt');
+    const val = getText(key, lang);
+    if (val) el.alt = val;
+  });
 
-    // set background-image style
-    document.querySelectorAll('[data-i18n-bg]').forEach(el => {
-      const key = el.getAttribute('data-i18n-bg');
-      const val = getText(key, lang);
-      if (val) el.style.backgroundImage = `url("${val}")`;
-    });
+  // set background-image style
+  document.querySelectorAll('[data-i18n-bg]').forEach(el => {
+    const key = el.getAttribute('data-i18n-bg');
+    const val = prefixAsset(getText(key, lang));
+    if (val) el.style.backgroundImage = `url("${val}")`;
+  });
 
   return {
     translate: translateDocument,

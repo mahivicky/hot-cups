@@ -28,6 +28,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/images");
   eleventyConfig.addPassthroughCopy("components");
 
+  // Make pathPrefix available globally in all templates
+  eleventyConfig.addGlobalData && eleventyConfig.addGlobalData("pathPrefix", pathPrefix);
+
   return {
     dir: {
       input: ".",

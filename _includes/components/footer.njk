@@ -9,7 +9,7 @@
   </div>
 
   <aside class="bg-white p-3 rounded shadow-sm flex items-start gap-3" role="complementary" aria-label="Meet the couple">
-    <img src="{{ pathPrefix | default('/') }}{{ i18n[page.lang]["footer.meet.image"] or 'assets/images/owners.jpg' }}" alt="{{ i18n[page.lang]["footer.meet.alt"] or 'Owners' }}" class="w-16 h-16 object-cover rounded-full flex-shrink-0" />
+    <img src="{{ pathPrefix ~ (i18n[page.lang]["footer.meet.image"] or 'assets/images/owners.jpg') }}" alt="{{ i18n[page.lang]["footer.meet.alt"] or 'Owners' }}" class="w-16 h-16 object-cover rounded-full flex-shrink-0" />
     <div>
       <div class="font-semibold">{{ i18n[page.lang]["footer.meet.title"] or "Meet the couple" }}</div>
       <div class="text-xs text-slate-600 mt-1">{{ i18n[page.lang]["footer.meet.desc"] or "A passionate couple serving comforting soups and juices with love." }}</div>
