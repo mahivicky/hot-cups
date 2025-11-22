@@ -1,0 +1,7 @@
+<nav class="bg-white rounded shadow p-2" role="tablist" aria-label="Main tabs">
+  <div class="flex gap-2">
+    <button id="tab-soups-{{ page.lang }}" class="tab-btn px-4 py-2 rounded bg-green-100 text-green-700" role="tab" aria-selected="true" aria-controls="section-soups-{{ page.lang }}" data-tab="soups">{{ i18n[page.lang]["tab.soups"] or "Soups" }}</button>
+    <button id="tab-juices-{{ page.lang }}" class="tab-btn px-4 py-2 rounded" role="tab" aria-selected="false" aria-controls="section-juices-{{ page.lang }}" data-tab="juices">{{ i18n[page.lang]["tab.juices"] or "Juices" }}</button>
+  </div>
+</nav>
+

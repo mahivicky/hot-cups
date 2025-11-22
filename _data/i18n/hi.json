@@ -1,0 +1,35 @@
+{
+  "promo.title": "हॉट सूप उत्सव!",
+  "tab.soups": "सूप्स",
+  "tab.juices": "रस",
+  "footer.contact": "संपर्क: +91 98765 43210 — 123 सूप स्ट्रीट",
+  "footer.hours": "समय: सुबह 8:00 — रात 10:00",
+  "soups.title": "हॉट सूप प्रकार",
+  "soup.tomato.name": "टमाटर सूप",
+  "soup.tomato.benefits": ["गरम, स्वादिष्ट टमाटर सूप"],
+  "soup.chicken.name": "चिकन सूप",
+  "soup.chicken.benefits": ["गरम चिकन सूप, स्वादिष्ट और पोषक"] ,
+  "juices.title": "स्वस्थ रस",
+  "juice.mango.name": "आम का जूस",
+  "juice.mango.benefits": ["रसीला आम का जूस"],
+  "juice.amla.name": "आंवला जूस – टॉप 10 शक्तिशाली लाभ",
+  "juice.amla.benefits": [
+    "शक्तिशाली इम्यूनिटी बूस्टर – infections से सुरक्षा देता है।",
+    "पाचन सुधारता है और acidity कम करता है।",
+    "शरीर को detox कर खून को साफ करता है।",
+    "चमकदार और युवा दिखने वाली त्वचा देता है।",
+    "बालों की जड़ों को मजबूत कर hair fall कम करता है।",
+    "मेटाबॉलिज़्म बढ़ाकर weight loss में मदद करता है।",
+    "ब्लड शुगर को नियंत्रित करने में सहायक।",
+    "हृदय स्वास्थ्य सुधारता है और खराब cholesterol कम करता है।",
+    "याददाश्त तेज कर फोकस बढ़ाता है।",
+    "ऊर्जा बढ़ाता है और थकान कम करता है।"
+  ],
+  "special.today": "आज की खास पेशकश: आंवला जूस — 20% छूट!",
+  "juice.amla.image": "assets/images/amla_juice.png"
+  ,
+  "footer.meet.title": "दंपती से मिलें",
+  "footer.meet.desc": "प्यार से सूप और रस परोसने वाला एक जोड़ा।",
+  "footer.meet.image": "assets/images/amla_juice.png",
+  "footer.meet.alt": "मालिक"
+}

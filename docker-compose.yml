@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  eleventy:
+    build: .
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace:cached
+    ports:
+      - "8080:8080"
+    command: npm run dev
+    environment:
+      - NODE_ENV=development
