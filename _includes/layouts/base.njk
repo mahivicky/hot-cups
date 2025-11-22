@@ -114,6 +114,7 @@
           projectBase = '/';
         }
       }
+      console.log("Resolved projectBase: " + projectBase);
       window.__PROJECT_BASE = projectBase;
       window.navigateLang = function(code){
         if (!code) return;
