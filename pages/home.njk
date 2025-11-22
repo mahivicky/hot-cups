@@ -16,7 +16,7 @@ permalink: "/{{ lang.code }}/index.html"
     {% for item in menu.soups %}
     <article class="p-4 bg-white rounded shadow">
       <div class="flex flex-col md:flex-row items-start gap-4">
-        <img src="/{{ item.image }}" alt="{{ i18n[page.lang][ item.id + '.name' ] }}" class="w-full md:w-[200px] h-auto md:h-[200px] object-cover rounded" />
+        <img src="{{ pathPrefix | default('/') }}{{ item.image }}" alt="{{ i18n[page.lang][ item.id + '.name' ] }}" class="w-full md:w-[200px] h-auto md:h-[200px] object-cover rounded" />
         <div class="flex-1">
           <h3 class="font-bold text-lg">{{ i18n[page.lang][ item.id + '.name' ] }}</h3>
           {% set benefits = i18n[page.lang][ item.id + '.benefits' ] %}
@@ -46,7 +46,7 @@ permalink: "/{{ lang.code }}/index.html"
     {% for item in menu.juices %}
     <article class="p-4 bg-white rounded shadow">
       <div class="flex flex-col md:flex-row items-start gap-4">
-        <img src="/{{ item.image }}" alt="{{ i18n[page.lang][ item.id + '.name' ] }}" class="w-full md:w-[200px] h-auto md:h-[200px] object-cover rounded" />
+        <img src="{{ pathPrefix | default('/') }}{{ item.image }}" alt="{{ i18n[page.lang][ item.id + '.name' ] }}" class="w-full md:w-[200px] h-auto md:h-[200px] object-cover rounded" />
         <div class="flex-1">
           <h3 class="font-bold text-lg">{{ i18n[page.lang][ item.id + '.name' ] }}</h3>
           {% set benefits = i18n[page.lang][ item.id + '.benefits' ] %}
