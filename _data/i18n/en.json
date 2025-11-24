@@ -2,16 +2,16 @@
   "promo.title": "Hot Soup Fest!",
   "tab.soups": "Soups",
   "tab.juices": "Juices",
-  "footer.contact": "Contact: +91 98765 43210 — 123 Soup Street",
-  "footer.hours": "Open: 8:00 AM — 10:00 PM",
+  
   "soups.title": "Hot Soup Varieties",
   "soup.tomato.name": "Tomato Soup",
   "soup.tomato.benefits": ["A warm, comforting tomato soup."] ,
   "soup.chicken.name": "Chicken Soup",
   "soup.chicken.benefits": ["Hearty chicken soup with warming spices."] ,
+  
+  "special.today": "Today's special: Amla Juice — 20% off!",
+  
   "juices.title": "Healthy Juices",
-  "juice.mango.name": "Mango Juice",
-  "juice.mango.benefits": ["Fresh, ripe mango juice"],
   "juice.amla.name": "Amla Juice – Top 10 Powerful Benefits",
   "juice.amla.benefits": [
     "Super immunity booster – protects from infections.",
@@ -25,11 +25,26 @@
     "Sharpens memory and improves focus.",
     "Boosts energy and reduces tiredness."
   ],
-  "special.today": "Today's special: Amla Juice — 20% off!",
-  "juice.amla.image": "assets/images/amla_juice.png"
-  ,
+  "juice.amla.image": "assets/images/amla_juice.png",
+  "juice.bitter_gourd.name": "Bitter Gourd Juice – Health Benefits",
+  "juice.bitter_gourd.benefits": [
+    "Excellent for blood sugar control – naturally lowers and stabilizes sugar levels.",
+    "Cleanses the liver and flushes out toxins.",
+    "Boosts digestion and reduces bloating and constipation.",
+    "Purifies the blood and helps clear acne and skin blemishes.",
+    "Strengthens immunity with powerful antioxidants.",
+    "Supports weight loss by reducing bad cholesterol.",
+    "Improves skin glow by removing toxins.",
+    "Enhances eye health with Vitamin A.",
+    "Reduces bad cholesterol and supports heart health.",
+    "Controls appetite and prevents overeating."
+  ],
+  "juice.bitter_gourd.image": "assets/images/bitter_gourd_juice.png",
+  
   "footer.meet.title": "Meet the couple",
   "footer.meet.desc": "A passionate couple serving homemade healthy and comforting soups, juices and cup cakes with love.",
   "footer.meet.image": "assets/images/owner.png",
-  "footer.meet.alt": "Owners"
+  "footer.meet.alt": "Owners",
+  "footer.contact": "Contact: +91 98765 43210 — 123 Soup Street",
+  "footer.hours": "Open: 8:00 AM — 10:00 PM"
 }

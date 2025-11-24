@@ -2,5 +2,9 @@
   {
     "id": "juice.amla",
     "image": "assets/images/amla_juice.png"
+  },
+  {
+    "id": "juice.bitter_gourd",
+    "image": "assets/images/bitter_gourd_juice.png"
   }
 ]
