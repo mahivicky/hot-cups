@@ -19,59 +19,155 @@ document.addEventListener('DOMContentLoaded', () => {
   if (soups) soups.style.display = '';
 
   if (window.AOS) AOS.init({ duration: 600, once: true });
+  // debug: log juice toggle count
+  try { console.debug('main.js loaded, juice-toggle count:', document.querySelectorAll('.juice-toggle').length); } catch (e) {}
 });
 
 // Progressive reveal toggle for benefits lists (delegated)
-document.addEventListener('click', (e) => {
-  const btn = e.target.closest('.reveal-toggle');
-  if (!btn) return;
-  const selector = btn.getAttribute('data-target');
-  const list = document.querySelector(selector);
-  if (!list) return;
-  const expanded = btn.getAttribute('aria-expanded') === 'true';
-  if (expanded) {
-    // collapse with animated max-height
-    const fullHeight = list.scrollHeight;
-    // set current height then force to collapsed height
-    list.style.maxHeight = fullHeight + 'px';
-    // compute collapsed height = height of first list item
-    const firstLi = list.querySelector('li');
-    const liStyle = firstLi ? getComputedStyle(firstLi) : null;
-    const marginBottom = liStyle ? parseFloat(liStyle.marginBottom || 0) : 0;
-    const collapsedHeight = firstLi ? (firstLi.offsetHeight + marginBottom) : 0;
-    // trigger reflow
-    /* eslint-disable no-unused-expressions */
-    list.offsetHeight;
-    list.style.maxHeight = collapsedHeight + 'px';
-    list.classList.add('collapsed');
-    btn.setAttribute('aria-expanded', 'false');
-    btn.textContent = 'Show more';
-  } else {
-    // expand with animated max-height
-    const fullHeight = list.scrollHeight;
-    list.style.maxHeight = fullHeight + 'px';
-    // after transition, clear max-height to allow content to resize naturally
-    const onEnd = (ev) => {
-      if (ev.target !== list) return;
-      list.style.maxHeight = null;
-      list.removeEventListener('transitionend', onEnd);
-    };
-    list.addEventListener('transitionend', onEnd);
-    list.classList.remove('collapsed');
-    btn.setAttribute('aria-expanded', 'true');
-    btn.textContent = 'Show less';
+document.addEventListener("click", (event) => {
+  const target = event.target;
+
+  // ----------------------------
+  // 1. BENEFITS REVEAL TOGGLE
+  // ----------------------------
+  const revealBtn = target.closest(".reveal-toggle");
+  if (revealBtn) {
+    event.stopPropagation();          // prevent juice toggle handler
+    handleRevealToggle(revealBtn);
+    return;
+  }
+
+  // ----------------------------
+  // 2. JUICE DESCRIPTION TOGGLE
+  // ----------------------------
+  const juiceBtn = target.closest(".juice-toggle");
+  if (juiceBtn) {
+    event.stopPropagation();          // prevent reveal handler
+    handleJuiceToggle(juiceBtn);
+    return;
+  }
+
+  // ----------------------------
+  // 3. DISMISS TODAY’S BANNER
+  // ----------------------------
+  const dismissBtn = target.closest(".today-dismiss");
+  if (dismissBtn) {
+    handleDismissBanner(dismissBtn);
+    return;
   }
 });
 
-// Dismiss today's banner and persist choice per language
-document.addEventListener('click', (e) => {
-  const btn = e.target.closest('.today-dismiss');
-  if (!btn) return;
-  const lang = document.documentElement.lang || (window.location.pathname.split('/')[1] || 'en');
-  try { localStorage.setItem('todayDismissed-' + lang, '1'); } catch (err) {}
-  const banner = btn.closest('.today-banner');
+function handleRevealToggle(btn) {
+  const selector = btn.getAttribute("data-target");
+  const list =
+    selector?.startsWith("#")
+      ? document.getElementById(selector.slice(1))
+      : document.querySelector(selector);
+
+  if (!list) return;
+
+  const expanded = btn.getAttribute("aria-expanded") === "true";
+
+  if (expanded) {
+    // Collapse
+    const fullHeight = list.scrollHeight;
+    list.style.maxHeight = fullHeight + "px";
+
+    // compute collapsed height
+    const firstLi = list.querySelector("li");
+    const mb = firstLi ? parseFloat(getComputedStyle(firstLi).marginBottom) : 0;
+    const collapsedHeight = firstLi ? firstLi.offsetHeight + mb : 0;
+
+    list.offsetHeight; // reflow
+    list.style.maxHeight = collapsedHeight + "px";
+    list.classList.add("collapsed");
+
+    btn.setAttribute("aria-expanded", "false");
+    btn.textContent = "Show more";
+  } else {
+    // Expand
+    const fullHeight = list.scrollHeight;
+    list.style.maxHeight = fullHeight + "px";
+
+    const onEnd = (ev) => {
+      console.log('Benefits list expanded, resetting maxHeight');
+      if (ev.target === list) {
+        console.log('Benefits list expanded, resetting maxHeight');
+        // list.style.maxHeight = null;
+        list.removeEventListener("transitionend", onEnd);
+      }
+    };
+    list.addEventListener("transitionend", onEnd);
+
+    list.classList.remove("collapsed");
+    btn.setAttribute("aria-expanded", "true");
+    btn.textContent = "Show less";
+  }
+}
+
+function handleDismissBanner(btn) {
+  const lang =
+    document.documentElement.lang ||
+    window.location.pathname.split("/")[1] ||
+    "en";
+
+  try {
+    localStorage.setItem("todayDismissed-" + lang, "1");
+  } catch (err) {}
+
+  const banner = btn.closest(".today-banner");
   if (banner) banner.remove();
-});
+}
+
+function handleJuiceToggle(btn) {
+  const selector = btn.getAttribute("data-target");
+  const panel =
+    selector?.startsWith("#")
+      ? document.getElementById(selector.slice(1))
+      : document.querySelector(selector);
+
+  if (!panel) return;
+
+  const expanded = btn.getAttribute("aria-expanded") === "true";
+
+  if (expanded) {
+    // Collapse
+    const full = panel.scrollHeight;
+    panel.style.maxHeight = full + "px";
+    panel.offsetHeight;
+    panel.style.maxHeight = "0px";
+
+    const onEnd = (ev) => {
+      if (ev.target === panel) {
+        panel.style.maxHeight = null;
+        if (!panel.classList.contains("max-h-0")) panel.classList.add("max-h-0");
+        panel.addEventListener("transitionend", onEnd);
+      }
+    };
+    panel.addEventListener("transitionend", onEnd);
+
+    btn.setAttribute("aria-expanded", "false");
+    panel.setAttribute("aria-hidden", "true");
+    btn.textContent = "▾";
+  } else {
+    // Expand
+    const full = panel.scrollHeight;
+    panel.style.maxHeight = full + "px";
+
+    const onEnd = (ev) => {
+      if (ev.target === panel) {
+        panel.style.maxHeight = null;
+        if (panel.classList.contains("max-h-0")) panel.classList.remove("max-h-0");
+        panel.removeEventListener("transitionend", onEnd);
+      }
+    };
+    panel.addEventListener("transitionend", onEnd);
+
+    btn.setAttribute("aria-expanded", "true");
+    panel.setAttribute("aria-hidden", "false");
+    btn.textContent = "▴";
+  }
+}
 
 // On load, hide banner if dismissed for this language
 document.addEventListener('DOMContentLoaded', () => {
@@ -97,3 +193,29 @@ function initCollapsedBenefits(){
 }
 
 document.addEventListener('DOMContentLoaded', initCollapsedBenefits);
+
+function expandSection(el) {
+  el.classList.remove('collapsed');
+
+  // Step 1: fix the element at the collapsed height
+  let startHeight = el.offsetHeight;
+
+  // Step 2: set max-height explicitly so no transition occurs yet
+  el.style.maxHeight = startHeight + 'px';
+
+  // Force reflow
+  el.offsetHeight;
+
+  // Step 3: animate to full height
+  let endHeight = el.scrollHeight;
+  el.style.maxHeight = endHeight + 'px';
+
+  // Step 4: after transition, clear max-height safely
+  el.addEventListener('transitionend', function onEnd(ev) {
+    if (ev.target === el) {
+      el.style.maxHeight = null;
+      el.removeEventListener('transitionend', onEnd);
+    }
+  });
+}
+

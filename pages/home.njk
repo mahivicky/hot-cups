@@ -46,19 +46,27 @@ permalink: "/{{ lang.code }}/index.html"
     {% for item in menu.juices %}
     <article class="p-4 bg-white rounded shadow">
       <div class="flex flex-col md:flex-row items-start gap-4">
-        <img src="{{ pathPrefix ~ item.image }}" alt="{{ i18n[page.lang][ item.id + '.name' ] }}" class="w-full md:w-[200px] h-auto md:h-[200px] object-cover rounded" />
+        <div class="relative w-full md:w-[200px] h-auto md:h-[200px] rounded overflow-hidden">
+          <img src="{{ pathPrefix ~ item.image }}" alt="{{ i18n[page.lang][ item.id + '.name' ] }}" class="w-full h-full object-cover" />
+          <div class="img-gradient absolute inset-0 rounded"></div>
+          <div class="img-overlay-bar text-white px-2">
+            <div class="font-semibold text-sm">{{ i18n[page.lang][ item.id + '.name' ] }}</div>
+            <button class="juice-toggle" aria-expanded="false" data-target="#juice-desc-{{ item.id }}" aria-controls="juice-desc-{{ item.id }}">▾</button>
+          </div>
+        </div>
         <div class="flex-1">
-          <h3 class="font-bold text-lg">{{ i18n[page.lang][ item.id + '.name' ] }}</h3>
-          {% set benefits = i18n[page.lang][ item.id + '.benefits' ] %}
-          {% if benefits %}
-            <ol class="list-decimal pl-6 text-sm text-slate-600 space-y-1">
-              {% for b in benefits %}
-                <li>{{ b }}</li>
-              {% endfor %}
-            </ol>
-          {% else %}
-            <p class="text-sm text-slate-600">{{ i18n[page.lang][ item.id + '.desc' ] }}</p>
-          {% endif %}
+          <div id="juice-desc-{{ item.id }}" class="juice-desc max-h-0" aria-hidden="true">
+            {% set benefits = i18n[page.lang][ item.id + '.benefits' ] %}
+            {% if benefits %}
+              <ol class="list-decimal pl-6 text-sm text-slate-600 space-y-1">
+                {% for b in benefits %}
+                  <li>{{ b }}</li>
+                {% endfor %}
+              </ol>
+            {% else %}
+              <p class="text-sm text-slate-600">{{ i18n[page.lang][ item.id + '.desc' ] }}</p>
+            {% endif %}
+          </div>
         </div>
       </div>
     </article>

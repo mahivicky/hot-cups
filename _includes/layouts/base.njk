@@ -50,6 +50,41 @@
       border: 1px solid rgba(16,185,129,0.18);
       color: #065f46; /* green-800 */
     }
+    /* Juice card overlay + desc */
+    .img-gradient{
+      background: linear-gradient(to top, rgba(2,6,23,0.6), rgba(2,6,23,0));
+      border-radius: inherit;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .img-overlay-bar{
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: .5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: .25rem .5rem;
+      gap: .5rem;
+      pointer-events: auto;
+      z-index: 20;
+    }
+    .juice-toggle{
+      background: rgba(255,255,255,0.12);
+      border: none;
+      color: white;
+      padding: .25rem .5rem;
+      border-radius: .25rem;
+      cursor: pointer;
+    }
+    .juice-desc{
+      overflow: hidden;
+      transition: max-height 300ms ease;
+    }
+    .juice-desc.collapsed { 
+        max-height: 0px;
+    }
   </style>
 </head>
 <body class="bg-slate-50 min-h-screen text-slate-800">
@@ -69,7 +104,7 @@
     {% include "components/header.njk" %}
     <div class="mt-4">{% include "components/nav.njk" %}</div>
 
-    <main class="mt-6" data-aos="fade-up">
+    <main class="mt-6" data-aos="fade-up" data-aos-once="true">
       {{ content | safe }}
     </main>
 
@@ -77,6 +112,7 @@
   </div>
 
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="{{ pathPrefix }}assets/js/main.js"></script>
   <script>
     // Simple tab UI: show/hide sections with data-tab
     document.addEventListener('click', (e) => {
@@ -90,7 +126,7 @@
       if (target) target.style.display = '';
     });
 
-    if (window.AOS) AOS.init({ duration: 600, once: true });
+    if (window.AOS) AOS.init({ duration: 600, once: true, mirror: false });
   </script>
   <script>
     // Compute project base for language navigation.
